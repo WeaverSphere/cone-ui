@@ -235,7 +235,131 @@ export const removeDuplicate = (arr) => {
 
 // ROUTES
 
-export function buildRoutes(routeAssets, addy0, addy1) {
+export function buildRoutes(routeAssets, addy0, addy1, directRoute) {
+  let result = []
+
+  if (!directRoute) {
+    result = routeAssets
+        .map((routeAsset) => {
+
+          const arr = [];
+
+          if (addy0.toLowerCase() === routeAsset.address.toLowerCase()
+              || addy1.toLowerCase() === routeAsset.address.toLowerCase()) {
+            return arr;
+          }
+          arr.push({
+            routes: [
+              {
+                from: addy0,
+                to: routeAsset.address,
+                stable: true,
+              },
+              {
+                from: routeAsset.address,
+                to: addy1,
+                stable: true,
+              },
+            ],
+            routeAsset: routeAsset,
+          });
+
+
+          arr.push({
+            routes: [
+              {
+                from: addy0,
+                to: routeAsset.address,
+                stable: false,
+              },
+              {
+                from: routeAsset.address,
+                to: addy1,
+                stable: false,
+              },
+            ],
+            routeAsset: routeAsset,
+          });
+
+          arr.push({
+            routes: [
+              {
+                from: addy0,
+                to: routeAsset.address,
+                stable: true,
+              },
+              {
+                from: routeAsset.address,
+                to: addy1,
+                stable: false,
+              },
+            ],
+            routeAsset: routeAsset,
+          });
+          arr.push({
+            routes: [
+              {
+                from: addy0,
+                to: routeAsset.address,
+                stable: false,
+              },
+              {
+                from: routeAsset.address,
+                to: addy1,
+                stable: true,
+              },
+            ],
+            routeAsset: routeAsset,
+          });
+          return arr;
+        })
+        .flat();
+  }
+
+  if( 
+    (toAsset.address.toLowerCase() === "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65".toLowerCase() && fromAsset.address.toLowerCase() === "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".toLowerCase()) ||
+    (toAsset.address.toLowerCase() === "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".toLowerCase() && fromAsset.address.toLowerCase() === "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65".toLowerCase())
+  ) {
+    result.push({
+      routes: [
+        {
+          from: addy0,
+          to: addy1,
+          stable: false,
+        },
+      ],
+      routeAsset: null,
+    });
+    } else {
+      result.push({
+        routes: [
+          {
+            from: addy0,
+            to: addy1,
+            stable: true,
+          },
+        ],
+        routeAsset: null,
+      });
+      result.push({
+        routes: [
+          {
+            from: addy0,
+            to: addy1,
+            stable: false,
+          },
+        ],
+        routeAsset: null,
+      });
+    }
+
+  
+  // console.log(">>> ROUTES:", result)
+  return result;
+}
+
+/** Without direct route */
+export function buildRoutes_old(routeAssets, addy0, addy1) {
   const result = routeAssets
     .map((routeAsset) => {
 

@@ -126,5 +126,11 @@ const ROUTE_ASSETS_SYMBOLS = [
 
 export const ROUTE_ASSETS = BASE_ASSETS_WHITELIST.filter(x => ROUTE_ASSETS_SYMBOLS.includes(x.symbol));
 
+// hardcoded routes for volatile USD+ tokens
+export const DIRECT_SWAP_ROUTES = {
+  // USD+ -> WBNB
+  ["0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65".toLowerCase()]: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".toLowerCase(),
+}
+
 export const DEFAULT_ASSET_FROM = CONTRACTS.FTM_SYMBOL
 export const DEFAULT_ASSET_TO = "0xA60205802E1B5C6EC1CAFA3cAcd49dFeECe05AC9"

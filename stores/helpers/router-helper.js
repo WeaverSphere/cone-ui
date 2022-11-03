@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import {ACTIONS, CONTRACTS} from "./../constants";
+import {ACTIONS, CONTRACTS, DIRECT_SWAP_ROUTES} from "./../constants";
 import {formatBN, parseBN, buildRoutes, retry, getPrice, getAmountOut} from '../../utils';
 
 
@@ -126,6 +126,10 @@ export const quoteSwap = async (
       return null;
     }
 
+    const directSwapRoute =
+        (DIRECT_SWAP_ROUTES[fromAsset.address.toLowerCase()] && DIRECT_SWAP_ROUTES[fromAsset.address.toLowerCase()]  === toAsset.address.toLowerCase())
+        || (DIRECT_SWAP_ROUTES[toAsset.address.toLowerCase()] && DIRECT_SWAP_ROUTES[toAsset.address.toLowerCase()]  === fromAsset.address.toLowerCase())
+
     const routerContract = new web3.eth.Contract(
       CONTRACTS.ROUTER_ABI,
       CONTRACTS.ROUTER_ADDRESS
@@ -143,7 +147,7 @@ export const quoteSwap = async (
       addy1 = CONTRACTS.WFTM_ADDRESS;
     }
 
-    let amountOuts = buildRoutes(routeAssets, addy0, addy1)
+    let amountOuts = buildRoutes(routeAssets, addy0, addy1, directSwapRoute)
 
     const retryCall = async () => {
       const res = await Promise.allSettled(
