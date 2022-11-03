@@ -317,8 +317,8 @@ export function buildRoutes(routeAssets, addy0, addy1, directRoute) {
   }
 
   if( 
-    (toAsset.address.toLowerCase() === "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65".toLowerCase() && fromAsset.address.toLowerCase() === "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".toLowerCase()) ||
-    (toAsset.address.toLowerCase() === "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".toLowerCase() && fromAsset.address.toLowerCase() === "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65".toLowerCase())
+    (addy0.toLowerCase() === "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65".toLowerCase() && addy1.toLowerCase() === "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".toLowerCase()) ||
+    (addy0.toLowerCase() === "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".toLowerCase() && addy1.toLowerCase() === "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65".toLowerCase())
   ) {
     result.push({
       routes: [
@@ -352,6 +352,8 @@ export function buildRoutes(routeAssets, addy0, addy1, directRoute) {
         routeAsset: null,
       });
     }
+
+    console.log({ result });
 
   
   // console.log(">>> ROUTES:", result)
